@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin · DS Auto Cleaning</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#212121">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;500;600;700;800;900&family=Zalando+Sans:wght@400;500;600&family=Archivo:wdth,wght@125,400..900&display=swap">
+<link rel="stylesheet" href="styles.css?v=30">
+</head>
+<body class="adm-body">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+</svg>
+
+<header class="adm-top">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Nazad na sajt"><img src="https://cdn.prod.website-files.com/67b71c40bef7c82fadcc0b50/67b736dffbebf0c587fb6adf_Logo.svg" alt="DS Auto Cleaning" width="60" height="40"></a>
+    <span class="adm-tag">Admin</span>
+    <div class="adm-user" id="admUser" hidden>
+      <span id="admName"></span>
+      <button class="btn btn-line" type="button" id="logoutBtn">Odjavi se</button>
+    </div>
+  </div>
+</header>
+
+<main class="adm-main">
+  <!-- LOGIN -->
+  <section class="adm-login" id="loginView" hidden>
+    <form class="adm-login-card" id="loginForm" novalidate>
+      <span class="adm-lock"><svg><use href="#i-lock"/></svg></span>
+      <h1>Prijava</h1>
+      <p class="lead">Samo za vlasnika. Ovde upravljate slobodnim i zauzetim terminima.</p>
+      <div class="field">
+        <label for="lgUser">Korisničko ime</label>
+        <input id="lgUser" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      </div>
+      <div class="field">
+        <label for="lgPass">Lozinka</label>
+        <div class="pw-wrap">
+          <input id="lgPass" name="password" type="password" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" id="pwToggle" aria-label="Prikaži lozinku" aria-pressed="false"><svg><use href="#i-eye"/></svg></button>
+        </div>
+      </div>
+      <p class="err" id="loginErr" role="alert"></p>
+      <button class="btn btn-wine" type="submit" id="loginBtn">Prijavi se</button>
+      <a class="adm-back" href="index.html">← Nazad na sajt</a>
+    </form>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="adm-dash" id="dashView" hidden>
+    <div class="wrap">
+      <div class="adm-head">
+        <div>
+          <span class="eyebrow">Upravljanje terminima</span>
+          <h1>Kalendar</h1>
+          <p class="lead">Kliknite na dan da ga označite kao zauzet ili da zauzmete pojedinačne termine. Promene se odmah vide klijentima na sajtu.</p>
+        </div>
+        <div class="adm-stats" id="admStats"></div>
+      </div>
+
+      <div class="adm-grid">
+        <div class="book-card adm-cal">
+          <div class="cal">
+            <div class="cal-head">
+              <button type="button" class="cal-nav" id="aPrev" aria-label="Prethodni mesec"><svg><use href="#i-l"/></svg></button>
+              <strong id="aTitle" aria-live="polite"></strong>
+              <button type="button" class="cal-nav" id="aNext" aria-label="Sledeći mesec"><svg><use href="#i-r"/></svg></button>
+            </div>
+            <div class="cal-week" aria-hidden="true"><span>Pon</span><span>Uto</span><span>Sre</span><span>Čet</span><span>Pet</span><span>Sub</span><span>Ned</span></div>
+            <div class="cal-grid" id="aGrid"></div>
+            <div class="cal-legend">
+              <span><i class="lg free"></i>Slobodno</span>
+              <span><i class="lg part"></i>Delimično zauzeto</span>
+              <span><i class="lg busy"></i>Ceo dan zauzet</span>
+              <span><i class="lg closed"></i>Neradni dan</span>
+            </div>
+          </div>
+          <p class="adm-window" id="aWindow"></p>
+        </div>
+
+        <div class="book-card adm-day" id="dayPanel" aria-live="polite">
+          <p class="slots-empty" id="dayEmpty">Izaberite dan u kalendaru.</p>
+          <div id="dayBody" hidden>
+            <span class="eyebrow" id="dayEyebrow"></span>
+            <h2 id="dayTitle"></h2>
+            <label class="switch">
+              <input type="checkbox" id="dayBusy">
+              <span class="switch-ui" aria-hidden="true"></span>
+              <span class="switch-txt"><b>Ceo dan zauzet</b><small>Klijenti ne mogu da izaberu ovaj dan.</small></span>
+            </label>
+            <div class="adm-slots-wrap">
+              <span class="label">Termini</span>
+              <div class="adm-slots" id="daySlots"></div>
+              <p class="sum-note">Kliknite na termin da ga zauzmete ili oslobodite.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="termini.js?v=10"></script>
+<script src="admin.js?v=10"></script>
+</body>
+</html>

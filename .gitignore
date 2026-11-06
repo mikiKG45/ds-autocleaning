@@ -1,0 +1,13 @@
+# Private data: admin accounts, sessions, busy days, test login
+data/
+
+# Local tool settings
+.claude/
+
+# Large / generated media (kept outside the repo)
+video/
+pre-posle-sajt/
+
+# Python
+__pycache__/
+*.pyc
