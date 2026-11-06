@@ -355,7 +355,10 @@
     const who = [$('bkName').value.trim(), $('bkPhone').value.trim()].filter(Boolean).join(' · ');
     $('sumClient').textContent = who || '—';
     $('sumService').textContent = s ? s.name : '—';
-    $('sumCar').textContent = model ? `${model}${year ? ` (${year})` : ''} · ${SIZES[size()]}` : `— · ${SIZES[size()]}`;
+    // Car text plus the icon of the selected vehicle size
+    const car = $('sumCar'), icon = form.querySelector('input[name="velicina"]:checked + span img').cloneNode();
+    car.textContent = model ? `${model}${year ? ` (${year})` : ''}` : '';
+    car.append(icon);
     $('sumWhen').textContent = selDate ? `${human(fromIso(selDate))}${selTime ? ` u ${selTime}` : ''}` : '—';
     $('sumDur').textContent = s ? s.dur : '—';
     $('sumPrice').textContent = s ? priceOf(s, size()) : '—';

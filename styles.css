@@ -540,6 +540,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .seg input { position: absolute; opacity: 0; pointer-events: none; }
 .seg span { display: block; text-align: center; padding: 10px 6px; border-radius: 999px; font: 600 .85rem/1 var(--f-display); color: var(--muted); transition: background .2s, color .2s; }
 .seg input:checked + span { background: var(--wine); color: var(--fg); }
+.seg span img { display: block; height: 26px; width: auto; margin-inline: auto; opacity: .55; transition: opacity .2s; }
+.seg label:hover img, .seg input:checked + span img { opacity: 1; }
+#sumCar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+#sumCar img { height: 26px; width: auto; }
 .seg input:focus-visible + span { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
 
 /* Calendar */
